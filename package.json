@@ -1,0 +1,28 @@
+{
+  "name": "@tradle/bot-style-me",
+  "version": "1.0.0",
+  "description": "a bot that lets you choose your styles",
+  "main": "index.js",
+  "repository": "https://github.com/tradle/bot-style-me",
+  "author": "Mark Vayngrib <mark@tradle.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@tradle/bots": "tradle/bots",
+    "@tradle/validate": "tradle/validate",
+    "eslint": "^3.15.0",
+    "husky": "^0.13.1"
+  },
+  "scripts": {
+    "test": "node test",
+    "lint": "eslint --quiet --ignore-path .gitignore .",
+    "precommit": "yarn run lint",
+    "start": "bots --conf ./conf.json",
+    "debug": "node --debug --inspect $(which bots) --conf ./conf.json",
+    "debug-brk": "node --debug-brk --inspect $(which bots) --conf ./conf.json"
+  },
+  "dependencies": {
+    "@tradle/bot-require-models": "^1.1.0",
+    "bluebird": "^3.4.7",
+    "node-fetch": "^1.6.3"
+  }
+}
