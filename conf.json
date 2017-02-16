@@ -1,0 +1,9 @@
+{
+  "port": 8000,
+  "repl": "\uD83C\uDF36  ",
+  "providerURL": "http://localhost:44444/style",
+  "dir": "./storage",
+  "strategies": [
+    "./"
+  ]
+}

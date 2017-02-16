@@ -5,10 +5,13 @@ const requireModels = require('@tradle/bot-require-models')
 const {
   Promise,
   co,
+  isPromise,
   getPathForTag,
-  toCamelCaseStyles
+  toCamelCaseStyles,
+  shallowClone
 } = require('./lib/utils')
 
+const STRINGS = require('./lib/strings')
 const TYPE = '_t'
 const BASE_STYLE_URL = 'https://raw.githubusercontent.com/pgmemk/TiM/master/styles/bankStyle.json'
 const STORAGE_KEY = require('./package.json').name
@@ -16,9 +19,6 @@ const stylesPackFormRequest = require('./lib/form-request-model')
 const MODELS = [stylesPackFormRequest]
 const createCommands = require('./lib/commands')
 const manageStyle = require('./lib/style')
-
-const INTRODUCTION = 'Ahh, finally, someone fashion conscious! Type "help" to see what I can do'
-const NO_COMPRENDO = 'I don\'t understand. If you\'re lost or a total noob, type "help"'
 
 module.exports = function styleMe (bot) {
   bot.use(requireModels(MODELS))
@@ -63,10 +63,11 @@ module.exports = function styleMe (bot) {
     const type = object[TYPE]
     if (isGreeting(type)) return sendIntroduction(user)
 
-    if (type === stylesPackFormRequest.id) {
+    if (type === STRINGS.STYLES_PACK) {
       style.set({ user, style: object })
       bot.users.save(user)
-      return
+      send(user, STRINGS.WHOA_GENIUS)
+      return sendStylePack(user)
     }
 
     if (type !== 'tradle.SimpleMessage') return
@@ -78,17 +79,29 @@ module.exports = function styleMe (bot) {
         return send(user, `"${message}"?? Don't talk to me about "${message}". Don't EVER talk to me about "${message}"!`)
       }
 
-      return send(user, NO_COMPRENDO)
+      return send(user, STRINGS.NO_COMPRENDO)
     }
 
     const { name, action } = command
     if (name !== 'help') yield initPromise
 
-    return action({ bot, user, baseStyles })
+    const maybePromise = action({ bot, user, baseStyles })
+    if (isPromise(maybePromise)) yield maybePromise
+
+    if (name === 'set' || name === 'reset') {
+      sendStylePack(user)
+    }
   })
 
+  function sendStylePack (user, tag) {
+    const custom = style.get({ user, tag })
+    const stylePack = shallowClone(baseStyles, custom)
+    stylePack[TYPE] = STRINGS.STYLES_PACK
+    return send(user, stylePack)
+  }
+
   function sendIntroduction (user) {
-    send(user, INTRODUCTION)
+    send(user, STRINGS.INTRODUCTION)
   }
 
   bot.users.on('create', sendIntroduction)
