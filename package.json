@@ -6,22 +6,25 @@
   "repository": "https://github.com/tradle/bot-style-me",
   "author": "Mark Vayngrib <mark@tradle.io>",
   "license": "MIT",
-  "devDependencies": {
-    "@tradle/bots": "tradle/bots",
-    "eslint": "^3.15.0",
-    "husky": "^0.13.1"
-  },
   "scripts": {
-    "test": "node test",
     "lint": "eslint --quiet --ignore-path .gitignore .",
     "precommit": "yarn run lint",
     "start": "bots --conf ./conf.json",
     "debug": "node --debug --inspect $(which bots) --conf ./conf.json",
     "debug-brk": "node --debug-brk --inspect $(which bots) --conf ./conf.json"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@tradle/bot-require-models": "^1.1.0",
-    "@tradle/validate": "tradle/validate",
+    "@tradle/validate-model": "tradle/validate-model"
+  },
+  "devDependencies": {
+    "@tradle/bot-require-models": "^1.1.0",
+    "@tradle/bots": "tradle/bots",
+    "@tradle/validate-model": "tradle/validate-model",
+    "eslint": "^3.15.0",
+    "husky": "^0.13.1"
+  },
+  "dependencies": {
     "bluebird": "^3.4.7",
     "minimist": "^1.2.0",
     "node-fetch": "^1.6.3"
