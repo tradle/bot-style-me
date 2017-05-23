@@ -22,3 +22,5 @@ Currently only colors are exposed for modification. Here are some of the ones yo
 
 ![](./img/style1.png)
 ![](./img/style2.png)
+![](./img/style3.png)
+![](./img/style4.png)
