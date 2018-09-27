@@ -1,6 +1,8 @@
 
 # @tradle/bot-style-me
 
+**[DEPRECATED]** See [https://github.com/tradle/tradleconf](https://github.com/tradle/tradleconf) for instructions on configuring styles
+
 ## Usage
 
 Set the correct provider URL in [conf.json](./conf.json)
